@@ -8,6 +8,9 @@ public class MainMenuScreen : MonoBehaviour
     [SerializeField]
     private Button startGameButton;
 
+    [SerializeField]
+    private GameObject startGameScreen;
+
     private void OnEnable()
     {
         startGameButton.onClick.AddListener(OnStartGameClick);
@@ -20,6 +23,7 @@ public class MainMenuScreen : MonoBehaviour
 
     private void OnStartGameClick()
     {
-        MasterManager.Game();
+        gameObject.SetActive(false);
+        startGameScreen.SetActive(true);
     }
 }

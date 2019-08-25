@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.InputSystem;
+using UnityEngine.Events;
+
 public class MasterManager : MonoBehaviour
 {
     #region Singleton
@@ -22,6 +25,16 @@ public class MasterManager : MonoBehaviour
 
     #endregion
 
+    #region Input
+
+    private PlayerInputManager playerInputManager;
+    private List<PlayerInput> players;
+
+    #endregion
+
+    private UnityEvent<PlayerInput> onPlayerJoined = new CustomEvent<PlayerInput>();
+    private UnityEvent<PlayerInput> onPlayerLeft = new CustomEvent<PlayerInput>();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,7 +46,14 @@ public class MasterManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.LoadScene(mainMenuScene);
+
+            players = new List<PlayerInput>();
+            
+            playerInputManager = GetComponent<PlayerInputManager>();
+            playerInputManager.onPlayerJoined += PlayerJoined;
+            playerInputManager.onPlayerLeft += PlayerLeft;
+
+            MainMenu();
         }
     }
 
@@ -47,9 +67,41 @@ public class MasterManager : MonoBehaviour
         SceneManager.LoadScene(_instance.gameScene);
     }
 
+    public static void StartListeningForPlayers()
+    {
+        _instance.playerInputManager.EnableJoining();
+    }
+
+    public static void StopListeningForPlayers()
+    {
+        _instance.playerInputManager.DisableJoining();
+    }
+
+    private void PlayerJoined(PlayerInput playerInput)
+    {
+        onPlayerJoined.Invoke(playerInput);
+        players.Add(playerInput);
+        Debug.Log($"Player {playerInput.playerIndex} joined");
+    }
+
+    private void PlayerLeft(PlayerInput playerInput)
+    {
+        onPlayerLeft.Invoke(playerInput);
+        players.Remove(playerInput);
+    }
+
+    public static List<PlayerInput> Players
+    {
+        get { return _instance.players; }
+    }
+
+
+
     // Update is called once per frame
     void Update()
     {
         
     }
 }
+
+public class CustomEvent<T> : UnityEvent<T> { }
