@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +11,20 @@ public class GameManager : MonoBehaviour
     private Transform[] spawns;
 
     private List<PlayerScore> scores;
+
+    [SerializeField]
+    private float gameTime = 120;
+
+    private GameState gameState;
+
+    private float gameTimeElapsed;
+    public float RemainingTime
+    {
+        get { return gameTime - gameTimeElapsed; }
+    }
+
+    private List<PlayerScore> matchWinners = null;
+    public UnityEvent<List<PlayerScore>> OnGameOver = new CustomEvent<List<PlayerScore>>();
 
     private void Awake()
     {
@@ -24,7 +40,7 @@ public class GameManager : MonoBehaviour
 
             playerInput.transform.position = spawns[playerInput.playerIndex].position;
             var score = new PlayerScore();
-            score.player = playerInput;
+            score.Player = playerInput;
             scores.Add(score);
         }
     }
@@ -32,18 +48,46 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameState = GameState.Playing;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameState == GameState.Playing)
+        {
+            if(gameTimeElapsed > gameTime)
+            {
+                gameState = GameState.GameOver;
+
+                //Find match winners
+                matchWinners = scores.Where(s => s.Score == scores.Max(x => x.Score)).ToList();
+                OnGameOver.Invoke(matchWinners);
+                StartCoroutine(GameOverTimer());
+            }
+            else
+            {
+                gameTimeElapsed += Time.deltaTime;
+            }
+        }
     }
+
+    private IEnumerator GameOverTimer()
+    {
+        yield return new WaitForSeconds(6);
+        MasterManager.MainMenu();
+    }
+}
+
+public enum GameState
+{
+    Playing = 0,
+    Paused = 1,
+    GameOver = 2,
 }
 
 public class PlayerScore
 {
     public int Score;
-    public PlayerInput player;
+    public PlayerInput Player;
 }
