@@ -32,6 +32,6 @@ public class GameUi : MonoBehaviour
 
     private void SetTimer(float time)
     {
-        timerText.text = time.ToString("d2");
+        timerText.text = time.ToString("N2");
     }
 }

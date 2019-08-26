@@ -352,7 +352,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 1
 --- !u!1001 &97921540571280017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,16 +606,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2663478091305427784, guid: 2e30bd90e80be8c42a959367e54d1e5c,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 8977529727600461962}
     - target: {fileID: 7092864734536117103, guid: 2e30bd90e80be8c42a959367e54d1e5c,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2663478091305427784, guid: 2e30bd90e80be8c42a959367e54d1e5c,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 8977529727600461962}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e30bd90e80be8c42a959367e54d1e5c, type: 3}
 --- !u!1 &7281583885297476747 stripped

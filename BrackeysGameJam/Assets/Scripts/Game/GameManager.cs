@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     private List<PlayerScore> matchWinners = null;
     public UnityEvent<List<PlayerScore>> OnGameOver = new CustomEvent<List<PlayerScore>>();
+    public UnityEvent<int> OnPlayerScored = new CustomEvent<int>();
+    public UnityEvent<int> OnPlayerTricked = new CustomEvent<int>();
 
     private void Awake()
     {
@@ -76,6 +78,20 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(6);
         MasterManager.MainMenu();
+    }
+    public void PlayerScore(int playerIndex, Acorn acorn)
+    {
+        var player = scores.FirstOrDefault(s => s.Player.playerIndex == playerIndex);
+        if (acorn.Dud)
+        {
+            player.Score =Mathf.Max(0, player.Score-2);
+            OnPlayerTricked.Invoke(playerIndex);
+        }
+        else
+        {
+            player.Score++;
+            OnPlayerScored.Invoke(playerIndex);
+        }
     }
 }
 
