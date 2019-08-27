@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Player : MonoBehaviour
 {
     private Vector2 moveDirection;
+    private Rigidbody2D rigidbody;
 
     [SerializeField]
     private GameObject inGameUi;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         SwitchToMenu();
+        rigidbody = GetComponent<Rigidbody2D>();
 
         //var playerInput = GetComponent<PlayerInput>();
 
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(moveDirection * 3 * Time.deltaTime);
+        rigidbody.velocity = (moveDirection * 3);
+        //transform.Translate(moveDirection * 3 * Time.deltaTime);
     }
 }

@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform[] spawns;
 
+    [SerializeField]
+    private GameObject[] scoreAreas;
+
     private List<PlayerScore> scores;
 
     [SerializeField]
@@ -25,12 +28,17 @@ public class GameManager : MonoBehaviour
 
     private List<PlayerScore> matchWinners = null;
     public UnityEvent<List<PlayerScore>> OnGameOver = new CustomEvent<List<PlayerScore>>();
-    public UnityEvent<int> OnPlayerScored = new CustomEvent<int>();
-    public UnityEvent<int> OnPlayerTricked = new CustomEvent<int>();
+    public UnityEvent<PlayerScore> OnPlayerScored = new CustomEvent<PlayerScore>();
+    public UnityEvent<PlayerScore> OnPlayerTricked = new CustomEvent<PlayerScore>();
 
     private void Awake()
     {
         scores = new List<PlayerScore>();
+
+        foreach (var scoreArea in scoreAreas)
+        {
+            scoreArea.SetActive(false);
+        }
 
         foreach (var playerInput in MasterManager.Players)
         {
@@ -41,6 +49,7 @@ public class GameManager : MonoBehaviour
             playerMotor.SwitchToGame();
 
             playerInput.transform.position = spawns[playerInput.playerIndex].position;
+            scoreAreas[playerInput.playerIndex].SetActive(true);
             var score = new PlayerScore();
             score.Player = playerInput;
             scores.Add(score);
@@ -61,6 +70,7 @@ public class GameManager : MonoBehaviour
             if(gameTimeElapsed > gameTime)
             {
                 gameState = GameState.GameOver;
+                gameTimeElapsed = gameTime;
 
                 //Find match winners
                 matchWinners = scores.Where(s => s.Score == scores.Max(x => x.Score)).ToList();
@@ -84,13 +94,13 @@ public class GameManager : MonoBehaviour
         var player = scores.FirstOrDefault(s => s.Player.playerIndex == playerIndex);
         if (acorn.Dud)
         {
-            player.Score =Mathf.Max(0, player.Score-2);
-            OnPlayerTricked.Invoke(playerIndex);
+            player.Score = Mathf.Max(0, player.Score-2);
+            OnPlayerTricked.Invoke(player);
         }
         else
         {
             player.Score++;
-            OnPlayerScored.Invoke(playerIndex);
+            OnPlayerScored.Invoke(player);
         }
     }
 }

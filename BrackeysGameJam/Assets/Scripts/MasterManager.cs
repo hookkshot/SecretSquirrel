@@ -59,6 +59,11 @@ public class MasterManager : MonoBehaviour
 
     public static void MainMenu()
     {
+        foreach (var player in Players)
+        {
+            Destroy(player.gameObject);
+        }
+        Players.Clear();
         SceneManager.LoadScene(_instance.mainMenuScene);
     }
 
