@@ -59,9 +59,9 @@ public class MasterManager : MonoBehaviour
 
     public static void MainMenu()
     {
-        foreach (var player in Players)
+        for (int i = Players.Count-1; i >= 0; i--)
         {
-            Destroy(player.gameObject);
+            Destroy(Players[i].gameObject);
         }
         Players.Clear();
         SceneManager.LoadScene(_instance.mainMenuScene);

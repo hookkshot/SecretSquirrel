@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class GameUi : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameUi : MonoBehaviour
 
     private GameManager gameManager;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +29,7 @@ public class GameUi : MonoBehaviour
         gameManager.OnPlayerScored.AddListener(OnScore);
         gameManager.OnPlayerScored.AddListener(OnScore);
 
-        gameOverText.gameObject.SetActive(false);
+        animator = GetComponent<Animator>();
 
         for (int i = 0; i < scoreTexts.Length; i++)
         {
@@ -38,7 +41,10 @@ public class GameUi : MonoBehaviour
 
     private void OnGameOver(List<PlayerScore> winners)
     {
-        gameOverText.gameObject.SetActive(true);
+        gameOverText.text = $"The winner{(winners.Count > 1 ? "s are" : " is")} {string.Join(" and ", winners.Select(s => "player " + (s.Player.playerIndex+1))) }.";
+
+        animator.SetBool("Playing", false);
+
         foreach (var score in scoreTexts)
         {
             score.gameObject.SetActive(false);
@@ -49,6 +55,7 @@ public class GameUi : MonoBehaviour
     private void OnScore(PlayerScore player)
     {
         UpdateScore(player);
+        animator.SetTrigger($"Player{player.Player.playerIndex + 1}Score");
     }
 
     private void OnTrick(PlayerScore player)
