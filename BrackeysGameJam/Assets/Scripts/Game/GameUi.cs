@@ -27,7 +27,7 @@ public class GameUi : MonoBehaviour
 
         gameManager.OnGameOver.AddListener(OnGameOver);
         gameManager.OnPlayerScored.AddListener(OnScore);
-        gameManager.OnPlayerScored.AddListener(OnScore);
+        gameManager.OnPlayerTricked.AddListener(OnTrick);
 
         animator = GetComponent<Animator>();
 

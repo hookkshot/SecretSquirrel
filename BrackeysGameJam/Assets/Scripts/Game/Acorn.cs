@@ -19,11 +19,12 @@ public class Acorn : MonoBehaviour
 
     private void Start()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        
     }
 
     public void ChangeType(AcornColor color)
     {
+        renderer = GetComponent<SpriteRenderer>();
         switch (color)
         {
             case AcornColor.Natural:

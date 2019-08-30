@@ -32,9 +32,13 @@ public class GameManager : MonoBehaviour
         get { return gameTime - gameTimeElapsed; }
     }
 
+    [SerializeField]
+    private float startTime = 4;
+    private float startTimeElapsed = 0;
+
     private bool spawningDuds = false;
 
-    private float acornChange;
+    private float acornChange = 20;
     private float acornChangeElapsed;
 
     private AcornColor acornColor;
@@ -70,13 +74,6 @@ public class GameManager : MonoBehaviour
             scores.Add(score);
         }
 
-        for (int i = 0; i < Mathf.Max(1, MasterManager.Players.Count - 1); i++)
-        {
-            var acorn = Instantiate(acornPrefab, acornSpawns[Random.Range(0, acornSpawns.Length)].position, Quaternion.identity);
-            acorn.Dud = acornType == AcornType.Dud;
-            acorn.ChangeType(acornColor);
-        }
-
         acornColor = AcornColor.Natural;
         acornType = AcornType.Normal;
         OnAcornChanged.Invoke(acornColor);
@@ -85,12 +82,29 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameState = GameState.Playing;
+        gameState = GameState.Starting;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(gameState == GameState.Starting)
+        {
+            if(startTimeElapsed >= startTime)
+            {
+                startTimeElapsed = 0;
+                gameState = GameState.Playing;
+                for (int i = 0; i < Mathf.Max(1, MasterManager.Players.Count - 1); i++)
+                {
+                    SpawnAcorn();
+                }
+                return;
+            }
+            else
+            {
+                startTimeElapsed += Time.deltaTime;
+            }
+        }
         if(gameState == GameState.Playing)
         {
             if(gameTimeElapsed > gameTime)
@@ -102,6 +116,8 @@ public class GameManager : MonoBehaviour
                 matchWinners = scores.Where(s => s.Score == scores.Max(x => x.Score)).ToList();
                 OnGameOver.Invoke(matchWinners);
                 StartCoroutine(GameOverTimer());
+
+                //TODO Change players to no more input.
             }
             else
             {
@@ -120,8 +136,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void SpawnAcorn()
+    {
+        var acorn = Instantiate(acornPrefab, acornSpawns[Random.Range(0, acornSpawns.Length)].position, Quaternion.identity);
+        acorn.Dud = acornType == AcornType.Dud;
+        acorn.ChangeType(acornColor);
+
+        Debug.Log($"Acorn is {acornType.ToString()} and {acornColor.ToString()}");
+    }
+
     private void ChangeAcorns()
     {
+        Debug.Log("Change acorns");
         acornType = Random.Range(0f, 1f) > 0.7f ? AcornType.Dud : AcornType.Normal;
 
         switch (acornColor)
@@ -158,6 +184,8 @@ public class GameManager : MonoBehaviour
             player.Score++;
             OnPlayerScored.Invoke(player);
         }
+
+        SpawnAcorn();
     }
 }
 

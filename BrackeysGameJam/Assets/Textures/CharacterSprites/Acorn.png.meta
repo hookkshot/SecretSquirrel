@@ -5,6 +5,15 @@ TextureImporter:
   - first:
       213: -6406794871735507730
     second: Acorn_0
+  - first:
+      213: 8297601471488862521
+    second: Acorn_1
+  - first:
+      213: -3976121680048707079
+    second: Acorn_2
+  - first:
+      213: -238175081807205073
+    second: Acorn_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -92,6 +101,27 @@ TextureImporter:
       name: Acorn_0
       rect:
         serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3553047309c95354fbd1c585dc312c12
+      internalID: -6406794871735507730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Acorn_1
+      rect:
+        serializedVersion: 2
         x: 64
         y: 0
         width: 64
@@ -103,8 +133,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a6ec1485868c1d43ba09070a035d726
-      internalID: -6406794871735507730
+      spriteID: d809e30ddbc184640ade4438445aacd2
+      internalID: 8297601471488862521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Acorn_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c392695174c0714f8668a867dcf5ac2
+      internalID: -3976121680048707079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Acorn_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b7deafbffe4e2e498ef86e18a7af0fb
+      internalID: -238175081807205073
       vertices: []
       indices: 
       edges: []
