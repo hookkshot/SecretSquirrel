@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject gameRenderer;
 
+    private Animator animator;
+    private PlayerDirection direction;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,16 +28,94 @@ public class Player : MonoBehaviour
         SwitchToMenu();
         rigidbody = GetComponent<Rigidbody2D>();
 
-        //var playerInput = GetComponent<PlayerInput>();
-
-        //playerInput.actionEvents
+        animator = GetComponent<Animator>();
     }
 
     #region Input
 
     public void Move(CallbackContext ctx)
     {
-        moveDirection = ctx.ReadValue<Vector2>();
+        var direction = ctx.ReadValue<Vector2>();
+        if(direction.magnitude < 0.1f)
+        {
+            direction = Vector2.zero;
+        }
+
+        moveDirection = direction;
+
+        var xAbs = Mathf.Abs(moveDirection.x);
+        var yAbs = Mathf.Abs(moveDirection.y);
+
+        if (moveDirection.x < 0)
+        {
+            MoveDirection(PlayerDirection.Left);
+        }
+        else if(moveDirection.x > 0)
+        {
+            MoveDirection(PlayerDirection.Right);
+        }
+        else
+        {
+            MoveDirection(PlayerDirection.None);
+        }
+
+        //if(yAbs == 0 & xAbs == 0)
+        //{
+        //    MoveDirection(PlayerDirection.None);
+        //}
+        //else if(yAbs < xAbs)
+        //{
+        //    if (moveDirection.y > 0)
+        //    {
+        //        MoveDirection(PlayerDirection.Up);
+        //    }
+        //    else
+        //    {
+        //        MoveDirection(PlayerDirection.Down);
+        //    }
+        //}
+        //else
+        //{
+        //    if (moveDirection.x <= 0)
+        //    {
+        //        MoveDirection(PlayerDirection.Left);
+        //    }
+        //    else
+        //    {
+        //        MoveDirection(PlayerDirection.Right);
+        //    }
+        //}
+    }
+
+    public void MoveDirection(PlayerDirection newDirection)
+    {
+        if(newDirection != direction)
+        {
+            switch (newDirection)
+            {
+                case PlayerDirection.Left:
+                    animator.SetInteger("Direction", 0);
+                    animator.SetBool("Running", true);
+                    break;
+                case PlayerDirection.Right:
+                    animator.SetInteger("Direction", 2);
+                    animator.SetBool("Running", true);
+                    break;
+                case PlayerDirection.Up:
+                    animator.SetInteger("Direction", 1);
+                    animator.SetBool("Running", true);
+                    break;
+                case PlayerDirection.Down:
+                    animator.SetInteger("Direction", 3);
+                    animator.SetBool("Running", true);
+                    break;
+                case PlayerDirection.None:
+                    animator.SetBool("Running", false);
+                    break;
+            }
+
+            direction = newDirection;
+        }
     }
 
     public void Action1(CallbackContext ctx)
@@ -69,4 +150,13 @@ public class Player : MonoBehaviour
         rigidbody.velocity = (moveDirection * 3);
         //transform.Translate(moveDirection * 3 * Time.deltaTime);
     }
+}
+
+public enum PlayerDirection
+{
+    Left,
+    Right,
+    Up,
+    Down,
+    None,
 }

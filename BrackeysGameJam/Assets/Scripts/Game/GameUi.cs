@@ -16,6 +16,15 @@ public class GameUi : MonoBehaviour
     [SerializeField]
     private TMP_Text gameOverText;
 
+    [SerializeField]
+    private GameObject announcementUi;
+
+    [SerializeField]
+    private TMP_Text announcementText;
+
+    [SerializeField]
+    private Animator announcementAnimator;
+
     private GameManager gameManager;
 
     private Animator animator;
@@ -28,8 +37,10 @@ public class GameUi : MonoBehaviour
         gameManager.OnGameOver.AddListener(OnGameOver);
         gameManager.OnPlayerScored.AddListener(OnScore);
         gameManager.OnPlayerTricked.AddListener(OnTrick);
+        gameManager.OnAcornChanged.AddListener(OnAcornChange);
 
         animator = GetComponent<Animator>();
+        announcementUi.SetActive(false);
 
         for (int i = 0; i < scoreTexts.Length; i++)
         {
@@ -61,6 +72,19 @@ public class GameUi : MonoBehaviour
     private void OnTrick(PlayerScore player)
     {
         UpdateScore(player);
+    }
+
+    private void OnAcornChange(AcornColor color)
+    {
+        StartCoroutine(IOnAcornChange(color));
+    }
+
+    private IEnumerator IOnAcornChange(AcornColor color)
+    {
+        announcementUi.SetActive(true);
+        announcementText.text = $"We now have {color.ToString()} acorns which are {(Random.Range(0,2) == 0 ? "not " : "")}safe to eat.";
+        yield return new WaitForSeconds(4);
+        announcementUi.SetActive(false);
     }
 
     private void UpdateScore(PlayerScore player)

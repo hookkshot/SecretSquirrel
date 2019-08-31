@@ -35,6 +35,9 @@ public class MasterManager : MonoBehaviour
     private UnityEvent<PlayerInput> onPlayerJoined = new CustomEvent<PlayerInput>();
     private UnityEvent<PlayerInput> onPlayerLeft = new CustomEvent<PlayerInput>();
 
+    public static UnityEvent<PlayerInput> OnPlayerJoined { get { return _instance.onPlayerJoined; } }
+    public static UnityEvent<PlayerInput> OnPlayerLeft { get { return _instance.onPlayerLeft; } }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -84,8 +87,8 @@ public class MasterManager : MonoBehaviour
 
     private void PlayerJoined(PlayerInput playerInput)
     {
-        onPlayerJoined.Invoke(playerInput);
         players.Add(playerInput);
+        onPlayerJoined.Invoke(playerInput);
         Debug.Log($"Player {playerInput.playerIndex} joined");
     }
 
