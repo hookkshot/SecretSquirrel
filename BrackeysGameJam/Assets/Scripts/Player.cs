@@ -18,6 +18,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject gameRenderer;
 
+    [SerializeField]
+    private ParticleSystem footstepParticles;
+
+    [SerializeField]
+    private AudioClip footstepAudio;
+
+    private AudioSource audioSource;
+
     private Animator animator;
     private PlayerDirection direction;
 
@@ -29,6 +37,8 @@ public class Player : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = footstepAudio;
     }
 
     #region Input
@@ -126,6 +136,12 @@ public class Player : MonoBehaviour
     public void Action2(CallbackContext ctx)
     {
 
+    }
+
+    public void Footstep()
+    {
+        audioSource.Play();
+        footstepParticles.Play();
     }
 
     #endregion

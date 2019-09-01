@@ -153,16 +153,24 @@ public class GameManager : MonoBehaviour
         switch (acornColor)
         {
             case AcornColor.Natural:
-                acornColor = AcornColor.Glass;
+                acornColor = AcornColor.Chilli;
                 break;
-            case AcornColor.Iron:
+            case AcornColor.Dried:
                 acornColor = AcornColor.Natural;
                 break;
-            case AcornColor.Glass:
-                acornColor = AcornColor.Iron;
+            case AcornColor.Chilli:
+                acornColor = AcornColor.Lemon;
+                break;
+            case AcornColor.Lemon:
+                acornColor = AcornColor.Dried;
                 break;
         }
         OnAcornChanged.Invoke(acornColor);
+
+        for (int i = 0; i < Mathf.Max(1, MasterManager.Players.Count - 1); i++)
+        {
+            SpawnAcorn();
+        }
     }
 
     private IEnumerator GameOverTimer()
@@ -184,8 +192,6 @@ public class GameManager : MonoBehaviour
             player.Score++;
             OnPlayerScored.Invoke(player);
         }
-
-        SpawnAcorn();
     }
 }
 

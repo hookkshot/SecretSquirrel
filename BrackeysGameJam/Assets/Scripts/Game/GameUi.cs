@@ -76,13 +76,19 @@ public class GameUi : MonoBehaviour
 
     private void OnAcornChange(AcornColor color)
     {
-        StartCoroutine(IOnAcornChange(color));
+        var message = $"We now have {color.ToString()} acorns which are {(Random.Range(0, 2) == 0 ? "not " : "")}safe to eat.";
+        Announcement(message);
     }
 
-    private IEnumerator IOnAcornChange(AcornColor color)
+    private void Announcement(string message)
+    {
+        StartCoroutine(IAnnouncement(message));
+    }
+
+    private IEnumerator IAnnouncement(string message)
     {
         announcementUi.SetActive(true);
-        announcementText.text = $"We now have {color.ToString()} acorns which are {(Random.Range(0,2) == 0 ? "not " : "")}safe to eat.";
+        announcementText.text = message;
         yield return new WaitForSeconds(4);
         announcementUi.SetActive(false);
     }

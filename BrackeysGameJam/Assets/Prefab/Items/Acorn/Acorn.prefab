@@ -72,8 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8297601471488862521, guid: 8767ea4b6cdf794459f7bc0fe9ddab83,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ffa264b6c286da4f80ed02933b66e00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,7 +82,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &6331852137371878680
 Rigidbody2D:
   serializedVersion: 4
@@ -118,9 +117,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.19}
   serializedVersion: 2
-  m_Radius: 0.38
+  m_Radius: 0.25
 --- !u!114 &6331852137371878677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dud: 0
-  naturalSprite: {fileID: 8297601471488862521, guid: 8767ea4b6cdf794459f7bc0fe9ddab83,
-    type: 3}
-  ironSprite: {fileID: -238175081807205073, guid: 8767ea4b6cdf794459f7bc0fe9ddab83,
-    type: 3}
-  glassSprite: {fileID: -3976121680048707079, guid: 8767ea4b6cdf794459f7bc0fe9ddab83,
-    type: 3}
+  naturalSprite: {fileID: 21300000, guid: 8ffa264b6c286da4f80ed02933b66e00, type: 3}
+  chiliSprite: {fileID: 21300000, guid: 2d0a574ef76b5ca418eb5d205e5ee610, type: 3}
+  driedSprite: {fileID: 21300000, guid: 11028a01adaa216408b82b024e0513af, type: 3}
+  lemonSprite: {fileID: 21300000, guid: cad421246b197b84b932f87844213d4c, type: 3}

@@ -12,10 +12,13 @@ public class Acorn : MonoBehaviour
     private Sprite naturalSprite;
 
     [SerializeField]
-    private Sprite ironSprite;
+    private Sprite chiliSprite;
 
     [SerializeField]
-    private Sprite glassSprite;
+    private Sprite driedSprite;
+
+    [SerializeField]
+    private Sprite lemonSprite;
 
     private void Start()
     {
@@ -30,11 +33,14 @@ public class Acorn : MonoBehaviour
             case AcornColor.Natural:
                 renderer.sprite = naturalSprite;
                 break;
-            case AcornColor.Iron:
-                renderer.sprite = ironSprite;
+            case AcornColor.Dried:
+                renderer.sprite = driedSprite;
                 break;
-            case AcornColor.Glass:
-                renderer.sprite = glassSprite;
+            case AcornColor.Chilli:
+                renderer.sprite = chiliSprite;
+                break;
+            case AcornColor.Lemon:
+                renderer.sprite = lemonSprite;
                 break;
         }
     }
@@ -43,8 +49,9 @@ public class Acorn : MonoBehaviour
 public enum AcornColor
 {
     Natural = 0,
-    Iron = 1,
-    Glass = 2,
+    Dried = 1,
+    Chilli = 2,
+    Lemon = 3,
 }
 
 public enum AcornType

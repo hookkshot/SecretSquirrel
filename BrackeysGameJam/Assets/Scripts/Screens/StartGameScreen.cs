@@ -10,6 +10,8 @@ public class StartGameScreen : MonoBehaviour
     private const string CAN_START = "Press the A button to join, press start to play";
     private const string ONLY_START = "Press start to play";
 
+    private const int MIN_PLAYERS = 2;
+
     private InputManager inputManager;
 
     [SerializeField]
@@ -48,7 +50,7 @@ public class StartGameScreen : MonoBehaviour
     private void OnPlayerJoined(UnityEngine.InputSystem.PlayerInput input)
     {
         Debug.Log("Player joined");
-        if(MasterManager.Players.Count > 1)
+        if(MasterManager.Players.Count >= MIN_PLAYERS)
         {
             joinText.text = CAN_START;
         }
@@ -72,7 +74,7 @@ public class StartGameScreen : MonoBehaviour
 
     private void OnStart()
     {
-        if (MasterManager.Players.Count > 1)
+        if (MasterManager.Players.Count >= MIN_PLAYERS)
         {
             MasterManager.Game();
         }
